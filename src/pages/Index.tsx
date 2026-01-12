@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import BMICalculator from '@/components/BMICalculator';
 import CalorieCalculator from '@/components/CalorieCalculator';
+import UnitConverter from '@/components/UnitConverter';
 import MealPlanner from '@/components/MealPlanner';
 import WorkoutPlanner from '@/components/WorkoutPlanner';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -42,6 +43,7 @@ const Index = () => {
           <HeroSection />
           <BMICalculator />
           <CalorieCalculator />
+          <UnitConverter />
           <MealPlanner />
           <WorkoutPlanner />
           <section id="features">
