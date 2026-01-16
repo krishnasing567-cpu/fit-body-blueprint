@@ -62,23 +62,54 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signInWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-    if (error) throw error;
+    try {
+      console.log('Starting Google OAuth flow...');
+      const { error, data } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
+        },
+      });
+      if (error) {
+        console.error('Google OAuth error:', error);
+        throw error;
+      }
+      console.log('Google OAuth initiated:', data);
+    } catch (error) {
+      console.error('Failed to sign in with Google:', error);
+      throw new Error(
+        error instanceof Error ? error.message : 'Failed to sign in with Google. Please ensure Google OAuth is configured in Supabase.'
+      );
+    }
   };
 
   const signInWithGitHub = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'github',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-    if (error) throw error;
+    try {
+      console.log('Starting GitHub OAuth flow...');
+      const { error, data } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            allow_signup: 'true',
+          },
+        },
+      });
+      if (error) {
+        console.error('GitHub OAuth error:', error);
+        throw error;
+      }
+      console.log('GitHub OAuth initiated:', data);
+    } catch (error) {
+      console.error('Failed to sign in with GitHub:', error);
+      throw new Error(
+        error instanceof Error ? error.message : 'Failed to sign in with GitHub. Please ensure GitHub OAuth is configured in Supabase.'
+      );
+    }
   };
 
   const signOut = async () => {
